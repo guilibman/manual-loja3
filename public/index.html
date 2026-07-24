@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual Operacional — Loja 3</title>
+<style>
+  :root {
+    --brand: #111111;
+    --brand-hover: #333333;
+    --accent: #111111;
+    --text: #111111;
+    --text-muted: #555555;
+    --text-light: #999999;
+    --bg: #F7F7F7;
+    --bg-card: #FFFFFF;
+    --border: #E0E0E0;
+    --border-strong: #BBBBBB;
+
+    --success: #1A5C34;
+    --success-bg: #F0F7F3;
+    --success-border: #A8D5B8;
+
+    --warn: #7A4F00;
+    --warn-bg: #FDF8EE;
+    --warn-border: #E8C97A;
+
+    --danger: #8B1A1A;
+    --danger-bg: #FDF2F2;
+    --danger-border: #E8AAAA;
+
+    --info: #1A3A5C;
+    --info-bg: #F0F4F8;
+    --info-border: #A8C4DC;
+
+    --step-size: 28px;
+    --radius: 10px;
+    --sidebar-w: 260px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--brand);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; height: 52px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .header-logo {
+    color: #fff; font-size: 15px; font-weight: 600; letter-spacing: -.02em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .header-logo span { opacity: .45; font-weight: 400; }
+  .header-search {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px; padding: 6px 12px;
+    flex: 1; max-width: 320px; margin: 0 20px;
+  }
+  .header-search input {
+    background: none; border: none; outline: none; color: #fff;
+    font-size: 14px; width: 100%;
+  }
+  .header-search input::placeholder { color: rgba(255,255,255,.4); }
+  .menu-toggle {
+    display: none; background: none; border: none; cursor: pointer;
+    color: #fff; padding: 4px;
+  }
+
+  /* ── LAYOUT ── */
+  .layout { display: flex; padding-top: 52px; min-height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w); flex-shrink: 0;
+    position: fixed; top: 52px; bottom: 0; left: 0;
+    overflow-y: auto; background: var(--bg-card);
+    border-right: 1px solid var(--border);
+    padding: 16px 0;
+    transition: transform .25s ease;
+  }
+  .sidebar-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .08em;
+    color: var(--text-light); text-transform: uppercase;
+    padding: 12px 20px 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 16px; cursor: pointer;
+    font-size: 13.5px; color: var(--text-muted);
+    transition: all .15s; text-decoration: none;
+    border: none; background: none; width: 100%; text-align: left;
+    border-left: 2px solid transparent;
+  }
+  .nav-item:hover { background: var(--bg); color: var(--text); }
+  .nav-item.active { background: var(--bg); color: var(--text); font-weight: 500; border-left-color: var(--brand); }
+  .nav-icon { font-size: 15px; flex-shrink: 0; }
+  .nav-badge {
+    margin-left: auto; font-size: 10px; font-weight: 600;
+    padding: 2px 7px; border-radius: 4px;
+  }
+  .badge-warn { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn-border); }
+  .badge-info { background: var(--info-bg); color: var(--info); border: 1px solid var(--info-border); }
+  .badge-gray { background: #F0F0F0; color: #555; border: 1px solid #DDD; }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1; padding: 40px 36px;
+    max-width: 860px;
+  }
+
+  /* ── HOME ── */
+  .home-hero {
+    background: var(--brand);
+    border-radius: 12px; padding: 32px 36px; margin-bottom: 28px; color: #fff;
+  }
+  .home-hero h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; letter-spacing: -.02em; }
+  .home-hero p { opacity: .65; font-size: 14px; line-height: 1.6; max-width: 480px; }
+  .home-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .home-tag {
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 6px; font-size: 12px; padding: 4px 12px; color: #fff;
+  }
+  .home-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px; margin-bottom: 32px;
+  }
+  .home-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px; cursor: pointer;
+    transition: all .15s; text-align: left; width: 100%;
+  }
+  .home-card:hover { border-color: var(--border-strong); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .home-card-icon { font-size: 20px; margin-bottom: 10px; }
+  .home-card-title { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .home-card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── ARTICLE ── */
+  .article { display: none; }
+  .article.active { display: block; }
+  .article-header { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .article-breadcrumb { font-size: 12px; color: var(--text-light); margin-bottom: 8px; }
+  .article-breadcrumb span { color: var(--text-muted); }
+  .article-title { font-size: 22px; font-weight: 600; color: var(--text); margin-bottom: 10px; letter-spacing: -.02em; }
+  .article-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+  .article-meta-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #F0F0F0; color: #444;
+    font-size: 11px; font-weight: 500; padding: 3px 10px;
+    border-radius: 4px; border: 1px solid #DDD;
+  }
+
+  p { margin-bottom: 12px; color: var(--text); }
+
+  /* ── STEPS ── */
+  .steps { margin: 24px 0; }
+  .step { display: flex; gap: 16px; margin-bottom: 4px; }
+  .step-left { display: flex; flex-direction: column; align-items: center; }
+  .step-num {
+    width: var(--step-size); height: var(--step-size);
+    background: var(--brand); color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; flex-shrink: 0;
+  }
+  .step-line { width: 1px; background: var(--border); flex: 1; margin: 4px 0; min-height: 16px; }
+  .step:last-child .step-line { display: none; }
+  .step-body { padding-bottom: 24px; flex: 1; }
+  .step-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; color: var(--text); }
+  .step-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 0; }
+
+  /* ── IMAGES ── */
+  .step-image {
+    margin-top: 12px; border-radius: var(--radius);
+    border: 1px solid var(--border); overflow: hidden; cursor: zoom-in;
+  }
+  .step-image img { width: 100%; display: block; transition: opacity .15s; }
+  .step-image img:hover { opacity: .92; }
+  .img-caption {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 7px 12px; font-size: 12px; color: var(--text-light);
+  }
+
+  /* ── VIDEO ── */
+  .video-wrapper {
+    margin-top: 20px; border-radius: var(--radius);
+    border: 1px solid var(--border); overflow: hidden;
+    background: #000;
+  }
+  .video-wrapper iframe {
+    width: 100%; height: 380px; display: block; border: none;
+  }
+  .video-caption {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 8px 12px; font-size: 12px; color: var(--text-light);
+  }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    border-radius: var(--radius); padding: 13px 16px;
+    margin: 16px 0; font-size: 13.5px; line-height: 1.6;
+    display: flex; gap: 12px; align-items: flex-start;
+    border: 1px solid;
+  }
+  .callout-icon { font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+  .callout-warn { background: var(--warn-bg); color: var(--warn); border-color: var(--warn-border); }
+  .callout-danger { background: var(--danger-bg); color: var(--danger); border-color: var(--danger-border); }
+  .callout-info { background: var(--info-bg); color: var(--info); border-color: var(--info-border); }
+  .callout-success { background: var(--success-bg); color: var(--success); border-color: var(--success-border); }
+  .callout strong { font-weight: 600; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(0,0,0,.9); align-items: center; justify-content: center; padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; }
+  .lightbox-close {
+    position: absolute; top: 16px; right: 20px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    color: #fff; font-size: 18px; cursor: pointer; border-radius: 6px;
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── SEARCH ── */
+  .search-results { display: none; }
+  .search-results.active { display: block; }
+  .search-result-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 20px; margin-bottom: 10px;
+    cursor: pointer; transition: border-color .15s;
+  }
+  .search-result-item:hover { border-color: var(--border-strong); }
+  .search-result-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+  .search-result-excerpt { font-size: 13px; color: var(--text-muted); }
+  .search-result-tag { font-size: 11px; color: var(--text-light); margin-top: 6px; }
+  mark { background: #F0F0F0; color: var(--text); border-radius: 2px; padding: 0 2px; font-weight: 600; }
+  .no-results { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); z-index: 90; }
+    .sidebar.open { transform: translateX(0); }
+    .main { margin-left: 0; padding: 20px 18px; }
+    .menu-toggle { display: flex; }
+    .header-search { display: none; }
+    .home-grid { grid-template-columns: 1fr 1fr; }
+    .mobile-search { display: block; padding: 14px 18px 0; }
+    .mobile-search input {
+      width: 100%; padding: 10px 14px; border-radius: 8px;
+      border: 1px solid var(--border); font-size: 14px;
+      background: var(--bg-card); color: var(--text); outline: none;
+    }
+    .mobile-search input:focus { border-color: var(--border-strong); }
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 89; }
+    .overlay.open { display: block; }
+    .video-wrapper iframe { height: 220px; }
+  }
+  @media (min-width: 769px) {
+    .mobile-search { display: none; }
+    .overlay { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <button class="menu-toggle" onclick="toggleSidebar()">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+  </button>
+  <div class="header-logo">Loja 3 <span>/ Manual Operacional</span></div>
+  <div class="header-search">
+    <svg width="13" height="13" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+    </svg>
+    <input type="text" id="search-desktop" placeholder="Buscar processo..." oninput="handleSearch(this.value)">
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-label">Início</div>
+    <button class="nav-item active" onclick="showHome()" id="nav-home">
+      <span class="nav-icon">🏠</span> Início
+    </button>
+
+    <div class="sidebar-label">Millenium — ERP</div>
+    <button class="nav-item" onclick="showArticle('pendencia-total')" id="nav-pendencia-total">
+      <span class="nav-icon">⚠️</span> Pendência Total
+      <span class="nav-badge badge-warn">ERP</span>
+    </button>
+    <button class="nav-item" onclick="showArticle('etiqueta-transporte')" id="nav-etiqueta-transporte">
+      <span class="nav-icon">🏷️</span> Correção de Etiqueta
+      <span class="nav-badge badge-info">ERP</span>
+    </button>
+    <button class="nav-item" onclick="showArticle('realocar-pedido')" id="nav-realocar-pedido">
+      <span class="nav-icon">🔁</span> Realocar Pedido
+      <span class="nav-badge badge-gray">ERP</span>
+    </button>
+
+    <div class="sidebar-label">VTEX — Pedidos</div>
+    <button class="nav-item" style="opacity:.4; cursor:default;">
+      <span class="nav-icon">📦</span> Em breve...
+    </button>
+
+    <div class="sidebar-label">Trocas & Devoluções</div>
+    <button class="nav-item" style="opacity:.4; cursor:default;">
+      <span class="nav-icon">🔄</span> Em breve...
+    </button>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="mobile-search">
+      <input type="text" id="search-mobile" placeholder="🔍  Buscar processo..." oninput="handleSearch(this.value)">
+    </div>
+
+    <!-- SEARCH RESULTS -->
+    <div class="search-results" id="search-results">
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;" id="search-count"></p>
+      <div id="search-list"></div>
+      <div class="no-results" id="no-results" style="display:none;">
+        <p>Nenhum resultado encontrado.</p>
+        <p style="margin-top:6px; font-size:13px;">Tente outras palavras-chave.</p>
+      </div>
+    </div>
+
+    <!-- HOME -->
+    <div id="home" class="article active">
+      <div class="home-hero">
+        <h1>Manual Operacional</h1>
+        <p>Guia de processos para os times de E-commerce, SAC e Lojas Físicas. Encontre qualquer processo pelo menu ou pela busca.</p>
+        <div class="home-tags">
+          <span class="home-tag">📦 E-commerce</span>
+          <span class="home-tag">🎧 SAC</span>
+          <span class="home-tag">🏪 Lojas Físicas</span>
+        </div>
+      </div>
+
+      <div class="home-grid">
+        <button class="home-card" onclick="showArticle('pendencia-total')">
+          <div class="home-card-icon">⚠️</div>
+          <div class="home-card-title">Pendência Total</div>
+          <div class="home-card-desc">Como marcar pendência total de um pedido no Millenium.</div>
+        </button>
+        <button class="home-card" onclick="showArticle('etiqueta-transporte')">
+          <div class="home-card-icon">🏷️</div>
+          <div class="home-card-title">Correção de Etiqueta</div>
+          <div class="home-card-desc">Como corrigir erro de CEP e gerar a etiqueta de transporte.</div>
+        </button>
+        <button class="home-card" onclick="showArticle('realocar-pedido')">
+          <div class="home-card-icon">🔁</div>
+          <div class="home-card-title">Realocar Pedido</div>
+          <div class="home-card-desc">Como copiar e realocar um pedido no Millenium.</div>
+        </button>
+        <button class="home-card" style="opacity:.4; cursor:default;">
+          <div class="home-card-icon">❌</div>
+          <div class="home-card-title">Cancelamento Solicitado</div>
+          <div class="home-card-desc">Em breve.</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ARTICLE: PENDÊNCIA TOTAL -->
+    <div id="pendencia-total" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Pendência Total</span></div>
+        <h1 class="article-title">Como dar Pendência Total em um pedido</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">📋 Lista Pré-Faturamento</span>
+        </div>
+      </div>
+
+      <p>A <strong>Pendência Total</strong> é usada quando a loja não tem nenhuma peça do pedido disponível para envio. Ao executar esse processo, o sistema registra a indisponibilidade e realoca o pedido para outro seller ou aciona o cancelamento, dependendo da situação.</p>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">🚨</span>
+        <div><strong>Atenção — Seller 101 (Benfica/CD):</strong> O seller 101 <strong>nunca deve</strong> usar Pendência Total diretamente. Isso cancela o pedido definitivamente na VTEX e reembolsa o cliente automaticamente, mesmo que outra loja possa atendê-lo. Nesse caso, comunique ao time de e-commerce para tomar a ação correta.</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Abra a Lista Pré-Faturamentos de Saída</div>
+            <p class="step-desc">No Millenium, acesse a aba <strong>Lista Pré-Faturamentos de Saída</strong>. Localize o pedido que precisa de pendência total na lista.</p>
+            <div class="step-image" onclick="openLightbox('images/pendenciatotal_1.png')">
+              <img src="images/pendenciatotal_1.png" alt="Lista Pré-Faturamentos de Saída no Millenium">
+              <div class="img-caption">Lista Pré-Faturamentos de Saída — clique para ampliar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Selecione o pedido e acesse Ações › Pendência Total</div>
+            <p class="step-desc">Marque o checkbox do pedido na lista. Em seguida, clique no botão <strong>Ações</strong> (na barra inferior) e selecione <strong>Pendência Total</strong> no menu que aparece.</p>
+            <div class="step-image" onclick="openLightbox('images/pendenciatotal_3.png')">
+              <img src="images/pendenciatotal_3.png" alt="Menu Ações com opção Pendência Total destacada">
+              <div class="img-caption">Botão Ações › Pendência Total — clique para ampliar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body">
+            <div class="step-title">Confirme clicando em Executar</div>
+            <p class="step-desc">Uma janela de confirmação será aberta mostrando o número do pré-faturamento. Verifique se é o pedido correto e clique em <strong>Executar</strong> para confirmar a pendência.</p>
+            <div class="step-image" onclick="openLightbox('images/pendenciatotal_2.png')">
+              <img src="images/pendenciatotal_2.png" alt="Tela de confirmação da Pendência Total com botão Executar">
+              <div class="img-caption">Tela de confirmação — clique Executar para finalizar</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>O que acontece depois:</strong> O sistema registra a indisponibilidade. O pedido sai da sua fila e o Millenium busca outro seller para atendê-lo. Acompanhe na Lista de Pedido de Venda se o pedido foi realocado.</div>
+      </div>
+    </div>
+
+    <!-- ARTICLE: ETIQUETA DE TRANSPORTE -->
+    <div id="etiqueta-transporte" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Correção de Etiqueta de Transporte</span></div>
+        <h1 class="article-title">Como corrigir erro na Etiqueta de Transporte</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">📦 Embarques</span>
+          <span class="article-meta-tag">📮 Correios</span>
+        </div>
+      </div>
+
+      <p>Quando a etiqueta de transporte não é gerada automaticamente, o motivo aparece no <strong>Log de Erros API Correios</strong> do Millenium. O erro mais comum é um CEP incorreto ou inexistente no cadastro do cliente.</p>
+
+      <hr class="divider">
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse o Log de Erros API Correios</div>
+            <p class="step-desc">No Millenium, abra a tela <strong>Log de erros com a api Correios (PPN)</strong>. Busque pelo número da nota do pedido com problema.</p>
+            <div class="step-image" onclick="openLightbox('images/etiqueta_1.jpeg')">
+              <img src="images/etiqueta_1.jpeg" alt="Tela Log de erros com a api Correios no Millenium">
+              <div class="img-caption">Log de Erros API Correios — clique para ampliar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Identifique o erro pelo número da nota</div>
+            <p class="step-desc">A coluna <strong>Mensagem</strong> mostra o erro exato — geralmente <em>"CEP-003: O CEP XXXXXXXX não foi encontrado"</em>. Anote o CEP com problema.</p>
+            <div class="step-image" onclick="openLightbox('images/etiqueta_2.jpeg')">
+              <img src="images/etiqueta_2.jpeg" alt="Detalhe do log mostrando o erro de CEP">
+              <div class="img-caption">Mensagem de erro indicando o CEP incorreto — clique para ampliar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse o pedido e clique em Alterar Cliente</div>
+            <p class="step-desc">Na <strong>Lista de Pedido de Venda</strong>, abra o pedido com erro. Clique no link <strong>Cliente</strong> e selecione <strong>Alterar Cliente</strong>.</p>
+            <div class="step-image" onclick="openLightbox('images/etiqueta_3.jpeg')">
+              <img src="images/etiqueta_3.jpeg" alt="Pedido de venda com opção Alterar Cliente">
+              <div class="img-caption">Clique em Cliente › Alterar Cliente — clique para ampliar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Corrija o CEP na aba Geral e salve</div>
+            <p class="step-desc">Na tela <strong>Alterar Cliente</strong>, vá até a aba <strong>Geral</strong> e localize o endereço com o CEP incorreto. Um cliente pode ter vários endereços — verifique todos. Corrija o CEP e clique em <strong>Salvar</strong>.</p>
+            <div class="step-image" onclick="openLightbox('images/etiqueta_4.jpeg')">
+              <img src="images/etiqueta_4.jpeg" alt="Tela Alterar Cliente com campo CEP">
+              <div class="img-caption">Aba Geral › campo CEP — corrija e clique em Salvar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body">
+            <div class="step-title">Gere a etiqueta novamente e valide</div>
+            <p class="step-desc">Com o CEP corrigido, volte à tela de embarques e tente gerar a etiqueta. Se o processo foi concluído corretamente, a etiqueta será emitida normalmente. Caso o erro persista, verifique se há outros endereços com CEP inválido no cadastro.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Atenção:</strong> Um mesmo cliente pode ter múltiplos endereços cadastrados. Se o erro continuar após corrigir o primeiro CEP, verifique os demais — pode haver outro inválido gerando conflito.</div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Dica:</strong> Para confirmar o CEP correto antes de editar, consulte o endereço do pedido diretamente na VTEX — ele mostra o endereço informado pela cliente no momento da compra.</div>
+      </div>
+    </div>
+
+    <!-- ARTICLE: REALOCAR PEDIDO -->
+    <div id="realocar-pedido" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Realocar Pedido</span></div>
+        <h1 class="article-title">Como realocar (copiar) um pedido</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">📋 Pedido de Venda</span>
+        </div>
+      </div>
+
+      <p>Quando um pedido precisa ser transferido para outro seller — por falta de estoque, erro de alocação ou outro motivo operacional — é possível <strong>copiar o pedido</strong> no Millenium e redirecioná-lo para a filial correta.</p>
+
+      <p>Assista ao vídeo abaixo com o passo a passo completo do processo:</p>
+
+      <div class="video-wrapper">
+        <iframe
+          src="https://drive.google.com/file/d/1vJZOenduWr3YTj_fgcTju3kcjU-7SYh3/preview"
+          allow="autoplay"
+          allowfullscreen>
+        </iframe>
+        <div class="video-caption">Vídeo tutorial — Como realocar (copiar) um pedido no Millenium</div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Atenção:</strong> Ao copiar um pedido, verifique se o pedido original foi devidamente cancelado ou encerrado para evitar duplicidade no sistema.</div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Dúvidas sobre este processo?</strong> Entre em contato com o time de e-commerce antes de executar a realocação caso não tenha certeza sobre qual filial deve receber o pedido.</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const searchIndex = [
+  {
+    id: 'pendencia-total',
+    title: 'Como dar Pendência Total em um pedido',
+    section: 'Millenium — ERP',
+    tags: ['pendência total', 'pendencia total', 'millenium', 'erp', 'lista pré-faturamento', 'prefaturamento', 'ações', 'executar', 'seller', 'cancelamento', 'estoque'],
+    excerpt: 'Marque o pedido na Lista Pré-Faturamentos de Saída, acesse Ações › Pendência Total e confirme clicando em Executar.'
+  },
+  {
+    id: 'etiqueta-transporte',
+    title: 'Como corrigir erro na Etiqueta de Transporte',
+    section: 'Millenium — ERP',
+    tags: ['etiqueta', 'etiqueta de transporte', 'correios', 'cep', 'cep incorreto', 'log de erros', 'api correios', 'embarque', 'alterar cliente', 'endereço'],
+    excerpt: 'Acesse o Log de Erros API Correios, identifique o CEP incorreto pelo número da nota, corrija em Alterar Cliente e gere a etiqueta novamente.'
+  },
+  {
+    id: 'realocar-pedido',
+    title: 'Como realocar (copiar) um pedido',
+    section: 'Millenium — ERP',
+    tags: ['realocar', 'realocação', 'copiar pedido', 'copiar', 'transferir pedido', 'millenium', 'filial', 'seller', 'pedido de venda'],
+    excerpt: 'Copie o pedido no Millenium para transferi-lo para outro seller ou filial. Vídeo tutorial disponível.'
+  }
+];
+
+function showHome() {
+  hideAll();
+  document.getElementById('home').classList.add('active');
+  setActiveNav('nav-home');
+  clearSearch(); closeSidebar(); window.scrollTo(0,0);
+}
+
+function showArticle(id) {
+  hideAll();
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); setActiveNav('nav-' + id); }
+  clearSearch(); closeSidebar(); window.scrollTo(0,0);
+}
+
+function hideAll() {
+  document.querySelectorAll('.article').forEach(a => a.classList.remove('active'));
+  document.getElementById('search-results').classList.remove('active');
+}
+
+function setActiveNav(id) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+}
+
+function handleSearch(query) {
+  document.getElementById('search-desktop').value = query;
+  document.getElementById('search-mobile').value = query;
+  if (!query || query.trim().length < 2) { clearSearch(); showHome(); return; }
+  const q = query.toLowerCase().trim();
+  const results = searchIndex.filter(item =>
+    item.title.toLowerCase().includes(q) ||
+    item.excerpt.toLowerCase().includes(q) ||
+    item.tags.some(t => t.includes(q))
+  );
+  hideAll();
+  document.getElementById('search-results').classList.add('active');
+  const count = document.getElementById('search-count');
+  const list = document.getElementById('search-list');
+  const noResults = document.getElementById('no-results');
+  if (results.length === 0) {
+    count.textContent = ''; list.innerHTML = ''; noResults.style.display = 'block';
+  } else {
+    count.textContent = results.length + (results.length === 1 ? ' resultado' : ' resultados') + ' para "' + query + '"';
+    noResults.style.display = 'none';
+    list.innerHTML = results.map(r => `
+      <div class="search-result-item" onclick="showArticle('${r.id}')">
+        <div class="search-result-title">${highlight(r.title, q)}</div>
+        <div class="search-result-excerpt">${highlight(r.excerpt, q)}</div>
+        <div class="search-result-tag">${r.section}</div>
+      </div>
+    `).join('');
+  }
+}
+
+function highlight(text, q) {
+  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+function clearSearch() {
+  document.getElementById('search-desktop').value = '';
+  document.getElementById('search-mobile').value = '';
+  document.getElementById('search-results').classList.remove('active');
+}
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+</script>
+</body>
+</html>
