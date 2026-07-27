@@ -125,8 +125,8 @@
     background: var(--brand);
     border-radius: 12px; padding: 32px 36px; margin-bottom: 28px; color: #fff;
   }
-  .home-hero h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; letter-spacing: -.02em; }
-  .home-hero p { opacity: .65; font-size: 14px; line-height: 1.6; max-width: 480px; }
+  .home-hero h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; letter-spacing: -.02em; color: #fff; }
+  .home-hero p { color: rgba(255,255,255,.85); font-size: 14px; line-height: 1.6; max-width: 480px; }
   .home-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
   .home-tag {
     background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
@@ -428,8 +428,8 @@
           <div class="step-body">
             <div class="step-title">Selecione o pedido e acesse Ações › Pendência Total</div>
             <p class="step-desc">Marque o checkbox do pedido na lista. Em seguida, clique no botão <strong>Ações</strong> (na barra inferior) e selecione <strong>Pendência Total</strong> no menu que aparece.</p>
-            <div class="step-image" onclick="openLightbox('images/pendenciatotal_3.png')">
-              <img src="images/pendenciatotal_3.png" alt="Menu Ações com opção Pendência Total destacada">
+            <div class="step-image" onclick="openLightbox('images/pendenciatotal_2.png')">
+              <img src="images/pendenciatotal_2.png" alt="Menu Ações com opção Pendência Total destacada">
               <div class="img-caption">Botão Ações › Pendência Total — clique para ampliar</div>
             </div>
           </div>
@@ -440,8 +440,8 @@
           <div class="step-body">
             <div class="step-title">Confirme clicando em Executar</div>
             <p class="step-desc">Uma janela de confirmação será aberta mostrando o número do pré-faturamento. Verifique se é o pedido correto e clique em <strong>Executar</strong> para confirmar a pendência.</p>
-            <div class="step-image" onclick="openLightbox('images/pendenciatotal_2.png')">
-              <img src="images/pendenciatotal_2.png" alt="Tela de confirmação da Pendência Total com botão Executar">
+            <div class="step-image" onclick="openLightbox('images/pendenciatotal_3.png')">
+              <img src="images/pendenciatotal_3.png" alt="Tela de confirmação da Pendência Total com botão Executar">
               <div class="img-caption">Tela de confirmação — clique Executar para finalizar</div>
             </div>
           </div>
@@ -553,28 +553,78 @@
         </div>
       </div>
 
-      <p>Quando um pedido precisa ser transferido para outro seller — por falta de estoque, erro de alocação ou outro motivo operacional — é possível <strong>copiar o pedido</strong> no Millenium e redirecioná-lo para a filial correta.</p>
-
-      <p>Assista ao vídeo abaixo com o passo a passo completo do processo:</p>
+      <p>Use este processo quando um pedido já faturado precisa ser reenviado ou redirecionado. Situações comuns: extravio na transportadora, item com defeito encontrado no empacotamento, ou necessidade de realocar para outra filial.</p>
 
       <div class="video-wrapper">
         <iframe
-          src="https://drive.google.com/file/d/1vJZOenduWr3YTj_fgcTju3kcjU-7SYh3/preview"
-          allow="autoplay"
+          src="https://www.youtube.com/embed/Qe3xPj0tRdA"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>
         </iframe>
         <div class="video-caption">Vídeo tutorial — Como realocar (copiar) um pedido no Millenium</div>
       </div>
 
+      <hr class="divider">
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Localize o pedido e acesse Ações › Copiar Pedido</div>
+            <p class="step-desc">Na <strong>Lista de Pedido de Venda</strong>, localize o pedido a ser copiado. Clique em <strong>Ações › Copiar Pedido</strong>.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Confirme manter dados de frete e itens</div>
+            <p class="step-desc">O sistema perguntará se deseja manter os <strong>dados de frete</strong> → Sim. Em seguida, se deseja manter os <strong>mesmos itens</strong> → Sim. Se necessário, remova itens que não precisam ser reenviados.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Defina a filial de destino</div>
+            <p class="step-desc">Se o pedido vai para a <strong>mesma filial</strong>, não altere nada. Se vai para uma <strong>nova filial</strong>, atualize os seguintes campos:</p>
+            <ul style="margin: 8px 0 0 16px; font-size: 14px; color: var(--text-muted); line-height: 1.8;">
+              <li><strong>Filial</strong> — ex.: Ipanema = código 45</li>
+              <li><strong>Conta</strong> — ex.: Caixa E-Commerce Ipanema</li>
+              <li><strong>Transportadora e valor do frete</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Marque para nascer aprovado e efetive</div>
+            <p class="step-desc">Marque a opção para o pedido <strong>nascer já aprovado</strong>. Clique em <strong>Efetivar</strong> → confirme na tela seguinte → clique em <strong>Próximo Passo</strong> → <strong>Efetivar</strong> novamente.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body">
+            <div class="step-title">Anote o número do novo pedido e repasse à filial</div>
+            <p class="step-desc">O sistema gerará um novo número de pedido. <strong>Anote esse número</strong> e repasse para a filial responsável faturar o quanto antes.</p>
+          </div>
+        </div>
+
+      </div>
+
       <div class="callout callout-warn">
         <span class="callout-icon">⚠️</span>
-        <div><strong>Atenção:</strong> Ao copiar um pedido, verifique se o pedido original foi devidamente cancelado ou encerrado para evitar duplicidade no sistema.</div>
+        <div><strong>Mudança de estado (RJ → SP):</strong> Se a filial de destino for de um estado diferente da origem, além de alterar a filial e conta, é necessário ajustar a <strong>modalidade de frete</strong> — pois incidem outros encargos e impostos. Em caso de dúvida, acione o time de e-commerce.</div>
       </div>
 
       <div class="callout callout-info">
         <span class="callout-icon">ℹ️</span>
-        <div><strong>Dúvidas sobre este processo?</strong> Entre em contato com o time de e-commerce antes de executar a realocação caso não tenha certeza sobre qual filial deve receber o pedido.</div>
+        <div><strong>Atenção:</strong> Verifique se o pedido original foi devidamente encerrado após a cópia para evitar duplicidade no sistema.</div>
       </div>
+
     </div>
 
   </main>
