@@ -324,6 +324,10 @@
       <span class="nav-icon">🔁</span> Realocar Pedido
       <span class="nav-badge badge-gray">ERP</span>
     </button>
+    <button class="nav-item" onclick="showArticle('entrada-produto')" id="nav-entrada-produto">
+      <span class="nav-icon">📥</span> Entrada de Produto
+      <span class="nav-badge badge-warn">ERP</span>
+    </button>
 
     <div class="sidebar-label">VTEX — Pedidos</div>
     <button class="nav-item" style="opacity:.4; cursor:default;">
@@ -381,10 +385,10 @@
           <div class="home-card-title">Realocar Pedido</div>
           <div class="home-card-desc">Como copiar e realocar um pedido no Millenium.</div>
         </button>
-        <button class="home-card" style="opacity:.4; cursor:default;">
-          <div class="home-card-icon">❌</div>
-          <div class="home-card-title">Cancelamento Solicitado</div>
-          <div class="home-card-desc">Em breve.</div>
+        <button class="home-card" onclick="showArticle('entrada-produto')">
+          <div class="home-card-icon">📥</div>
+          <div class="home-card-title">Entrada de Produto</div>
+          <div class="home-card-desc">Como adicionar estoque manualmente a um produto no Millenium.</div>
         </button>
       </div>
     </div>
@@ -627,6 +631,92 @@
 
     </div>
 
+    <!-- ARTICLE: ENTRADA DE PRODUTO -->
+    <div id="entrada-produto" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Entrada de Produto</span></div>
+        <h1 class="article-title">Como dar Entrada de Produto (estoque manual)</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">📦 Logística</span>
+          <span class="article-meta-tag">🔢 Estoque</span>
+        </div>
+      </div>
+
+      <p>A <strong>Entrada de Produto</strong> é o processo manual de adição de estoque a um produto em uma filial específica no Millenium. Deve ser usado com cuidado — se feito incorretamente, pode gerar pendência na loja.</p>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Quando usar:</strong> O caso mais comum é quando um pedido fica travado no status <strong>"Pronto para Manuseio"</strong> na VTEX — o que indica que o pedido não foi integrado ao Millenium por falta de estoque no seller designado. Para destravar, inserimos um <strong>estoque fake</strong> no produto para forçar a integração. Depois, o seller dá pendência manual para o sistema realocar o pedido para outra filial com estoque real.</div>
+      </div>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">🚨</span>
+        <div><strong>Atenção:</strong> Analise cuidadosamente antes de executar. Esse processo altera o estoque real da filial no sistema. Após efetivar, confirme na <strong>Consulta de Estoque</strong> se a quantidade foi adicionada corretamente no produto e SKU desejados.</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse Logística › Recebimento › Movimentações › Entrada de Produto</div>
+            <p class="step-desc">No Millenium, navegue até <strong>Logística › Recebimento › Movimentações</strong> e abra a tela <strong>Entrada de Produto</strong>.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Selecione a filial e insira o código do produto</div>
+            <p class="step-desc">No campo <strong>Filial</strong>, selecione a loja que receberá o estoque. Em seguida, insira o <strong>código do produto</strong> no campo correspondente.</p>
+            <div class="step-image" onclick="openLightbox('images/entrada-produto_1.png')">
+              <img src="images/entrada-produto_1.png" alt="Tela Entrada de Produto no Millenium com filial e código do produto preenchidos">
+              <div class="img-caption">Tela Entrada de Produto — filial, código e quantidade — clique para ampliar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Selecione o SKU (tamanho) e a quantidade</div>
+            <p class="step-desc">Uma janela de <strong>Grade</strong> abrirá mostrando os SKUs disponíveis (tamanhos e cores). Insira a quantidade desejada na célula correspondente ao SKU correto. Clique em <strong>F12 OK</strong> para confirmar.</p>
+            <div class="step-image" onclick="openLightbox('images/entrada-produto_2.png')">
+              <img src="images/entrada-produto_2.png" alt="Janela de Grade do produto mostrando seleção de SKU e quantidade">
+              <div class="img-caption">Grade do produto — selecione o SKU e insira a quantidade — clique para ampliar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Clique em Efetivar</div>
+            <p class="step-desc">Com a quantidade preenchida, clique em <strong>(F12) Efetivar</strong> na barra inferior para confirmar a entrada de estoque.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body">
+            <div class="step-title">Confirme na Consulta de Estoque</div>
+            <p class="step-desc">Após efetivar, acesse a <strong>Consulta de Estoque</strong> no Millenium e verifique se a quantidade foi adicionada corretamente no produto e SKU desejados. Essa confirmação é obrigatória antes de qualquer passo seguinte.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Próximo passo após o estoque fake:</strong> Avise ao seller da filial que recebeu o estoque para que ele dê <strong>pendência manual</strong> no item assim que receber na fila. Isso fará o sistema realocar o pedido para outra filial com estoque real.</div>
+      </div>
+
+    </div>
+    <!-- /ARTICLE: ENTRADA DE PRODUTO -->
+
   </main>
 </div>
 
@@ -652,6 +742,13 @@ const searchIndex = [
     section: 'Millenium — ERP',
     tags: ['realocar', 'realocação', 'copiar pedido', 'copiar', 'transferir pedido', 'millenium', 'filial', 'seller', 'pedido de venda'],
     excerpt: 'Copie o pedido no Millenium para transferi-lo para outro seller ou filial. Vídeo tutorial disponível.'
+  },
+  {
+    id: 'entrada-produto',
+    title: 'Como dar Entrada de Produto (estoque manual)',
+    section: 'Millenium — ERP',
+    tags: ['entrada de produto', 'estoque', 'estoque fake', 'estoque manual', 'movimentações', 'recebimento', 'logística', 'sku', 'grade', 'pronto para manuseio', 'pedido travado', 'consulta de estoque', 'filial'],
+    excerpt: 'Acesse Logística › Recebimento › Movimentações, selecione a filial e o produto, insira a quantidade na grade e efetive. Confirme na Consulta de Estoque.'
   }
 ];
 
