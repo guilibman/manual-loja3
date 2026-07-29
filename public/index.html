@@ -60,7 +60,8 @@
     color: #fff; font-size: 15px; font-weight: 600; letter-spacing: -.02em;
     display: flex; align-items: center; gap: 10px;
   }
-  .header-logo span { opacity: .45; font-weight: 400; }
+  .header-logo img { height: 22px; width: auto; display: block; }
+  .header-logo span { opacity: .45; font-weight: 400; font-size: 14px; }
   .header-search {
     display: flex; align-items: center; gap: 8px;
     background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
@@ -74,7 +75,7 @@
   .header-search input::placeholder { color: rgba(255,255,255,.4); }
   .menu-toggle {
     display: none; background: none; border: none; cursor: pointer;
-    color: #fff; padding: 4px;
+    color: #fff; padding: 6px; margin-right: 4px;
   }
 
   /* ── LAYOUT ── */
@@ -256,13 +257,14 @@
     .sidebar { transform: translateX(-100%); z-index: 90; }
     .sidebar.open { transform: translateX(0); }
     .main { margin-left: 0; padding: 20px 18px; }
-    .menu-toggle { display: flex; }
+    .menu-toggle { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
+    .menu-toggle svg { width: 26px; height: 26px; }
     .header-search { display: none; }
     .home-grid { grid-template-columns: 1fr 1fr; }
-    .mobile-search { display: block; padding: 14px 18px 0; }
+    .mobile-search { display: block; padding: 16px 18px 0; }
     .mobile-search input {
-      width: 100%; padding: 10px 14px; border-radius: 8px;
-      border: 1px solid var(--border); font-size: 14px;
+      width: 100%; padding: 11px 14px; border-radius: 8px;
+      border: 1px solid var(--border); font-size: 15px;
       background: var(--bg-card); color: var(--text); outline: none;
     }
     .mobile-search input:focus { border-color: var(--border-strong); }
@@ -289,16 +291,19 @@
 <!-- HEADER -->
 <header class="header">
   <button class="menu-toggle" onclick="toggleSidebar()">
-    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path d="M3 12h18M3 6h18M3 18h18"/>
     </svg>
   </button>
-  <div class="header-logo">Loja 3 <span>/ Manual Operacional</span></div>
+  <div class="header-logo">
+    <img src="images/logo_3_branco.png" alt="Loja 3">
+    <span>/ Manual Operacional</span>
+  </div>
   <div class="header-search">
     <svg width="13" height="13" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
       <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
     </svg>
-    <input type="text" id="search-desktop" placeholder="Buscar processo..." oninput="handleSearch(this.value)">
+    <input type="text" id="search-desktop" placeholder="Buscar processo..." oninput="handleSearch(this.value, 'desktop')">
   </div>
 </header>
 
@@ -344,7 +349,7 @@
   <main class="main">
 
     <div class="mobile-search">
-      <input type="text" id="search-mobile" placeholder="🔍  Buscar processo..." oninput="handleSearch(this.value)">
+      <input type="text" id="search-mobile" placeholder="🔍  Buscar processo..." oninput="handleSearch(this.value, 'mobile')">
     </div>
 
     <!-- SEARCH RESULTS -->
@@ -777,9 +782,13 @@ function setActiveNav(id) {
   if (el) el.classList.add('active');
 }
 
-function handleSearch(query) {
-  document.getElementById('search-desktop').value = query;
-  document.getElementById('search-mobile').value = query;
+function handleSearch(query, origin) {
+  // sync the OTHER input only, to avoid loop
+  if (origin === 'mobile') {
+    document.getElementById('search-desktop').value = query;
+  } else {
+    document.getElementById('search-mobile').value = query;
+  }
   if (!query || query.trim().length < 2) { clearSearch(); showHome(); return; }
   const q = query.toLowerCase().trim();
   const results = searchIndex.filter(item =>
