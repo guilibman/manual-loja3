@@ -261,11 +261,12 @@
     .menu-toggle svg { width: 26px; height: 26px; }
     .header-search { display: none; }
     .home-grid { grid-template-columns: 1fr 1fr; }
-    .mobile-search { display: block; padding: 16px 18px 0; }
+    .mobile-search { display: block; padding: 16px 18px 0; position: relative; z-index: 1; }
     .mobile-search input {
       width: 100%; padding: 11px 14px; border-radius: 8px;
       border: 1px solid var(--border); font-size: 15px;
       background: var(--bg-card); color: var(--text); outline: none;
+      -webkit-appearance: none; pointer-events: auto;
     }
     .mobile-search input:focus { border-color: var(--border-strong); }
     .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 89; }
@@ -321,8 +322,16 @@
       <span class="nav-icon">⚠️</span> Pendência Total
       <span class="nav-badge badge-warn">ERP</span>
     </button>
+    <button class="nav-item" onclick="showArticle('pendencia-parcial')" id="nav-pendencia-parcial">
+      <span class="nav-icon">🔸</span> Pendência Parcial
+      <span class="nav-badge badge-warn">ERP</span>
+    </button>
     <button class="nav-item" onclick="showArticle('etiqueta-transporte')" id="nav-etiqueta-transporte">
       <span class="nav-icon">🏷️</span> Correção de Etiqueta
+      <span class="nav-badge badge-info">ERP</span>
+    </button>
+    <button class="nav-item" onclick="showArticle('emissao-etiqueta')" id="nav-emissao-etiqueta">
+      <span class="nav-icon">🖨️</span> Emissão de Etiqueta
       <span class="nav-badge badge-info">ERP</span>
     </button>
     <button class="nav-item" onclick="showArticle('realocar-pedido')" id="nav-realocar-pedido">
@@ -333,8 +342,6 @@
       <span class="nav-icon">📥</span> Entrada de Produto
       <span class="nav-badge badge-warn">ERP</span>
     </button>
-
-    <div class="sidebar-label">Lojas Físicas</div>
     <button class="nav-item" onclick="showArticle('entrada-mercadoria')" id="nav-entrada-mercadoria">
       <span class="nav-icon">🚚</span> Entrada de Mercadoria
       <span class="nav-badge badge-gray">ERP</span>
@@ -342,6 +349,18 @@
     <button class="nav-item" onclick="showArticle('gerar-plp')" id="nav-gerar-plp">
       <span class="nav-icon">📮</span> Gerar Lista PLP
       <span class="nav-badge badge-info">ERP</span>
+    </button>
+    <button class="nav-item" onclick="showArticle('reimpressao-nf')" id="nav-reimpressao-nf">
+      <span class="nav-icon">🧾</span> Reimpressão de NF
+      <span class="nav-badge badge-gray">ERP</span>
+    </button>
+    <button class="nav-item" onclick="showArticle('devolucao-ecommerce')" id="nav-devolucao-ecommerce">
+      <span class="nav-icon">↩️</span> Devolução E-commerce
+      <span class="nav-badge badge-gray">ERP</span>
+    </button>
+    <button class="nav-item" onclick="showArticle('devolucao-defeito')" id="nav-devolucao-defeito">
+      <span class="nav-icon">🔴</span> Devolução c/ Defeito
+      <span class="nav-badge badge-danger">ERP</span>
     </button>
 
     <div class="sidebar-label">VTEX — Pedidos</div>
@@ -390,10 +409,20 @@
           <div class="home-card-title">Pendência Total</div>
           <div class="home-card-desc">Como marcar pendência total de um pedido no Millenium.</div>
         </button>
+        <button class="home-card" onclick="showArticle('pendencia-parcial')">
+          <div class="home-card-icon">🔸</div>
+          <div class="home-card-title">Pendência Parcial</div>
+          <div class="home-card-desc">Como registrar pendência parcial de itens de um pedido.</div>
+        </button>
         <button class="home-card" onclick="showArticle('etiqueta-transporte')">
           <div class="home-card-icon">🏷️</div>
           <div class="home-card-title">Correção de Etiqueta</div>
           <div class="home-card-desc">Como corrigir erro de CEP e gerar a etiqueta de transporte.</div>
+        </button>
+        <button class="home-card" onclick="showArticle('emissao-etiqueta')">
+          <div class="home-card-icon">🖨️</div>
+          <div class="home-card-title">Emissão de Etiqueta</div>
+          <div class="home-card-desc">Como emitir a etiqueta de transporte de um pedido.</div>
         </button>
         <button class="home-card" onclick="showArticle('realocar-pedido')">
           <div class="home-card-icon">🔁</div>
@@ -403,7 +432,7 @@
         <button class="home-card" onclick="showArticle('entrada-produto')">
           <div class="home-card-icon">📥</div>
           <div class="home-card-title">Entrada de Produto</div>
-          <div class="home-card-desc">Como adicionar estoque manualmente a um produto no Millenium.</div>
+          <div class="home-card-desc">Como adicionar estoque manualmente a um produto.</div>
         </button>
         <button class="home-card" onclick="showArticle('entrada-mercadoria')">
           <div class="home-card-icon">🚚</div>
@@ -414,6 +443,21 @@
           <div class="home-card-icon">📮</div>
           <div class="home-card-title">Gerar Lista PLP</div>
           <div class="home-card-desc">Como incluir embarque e gerar a lista PLP dos Correios.</div>
+        </button>
+        <button class="home-card" onclick="showArticle('reimpressao-nf')">
+          <div class="home-card-icon">🧾</div>
+          <div class="home-card-title">Reimpressão de NF</div>
+          <div class="home-card-desc">Como reimprimir a nota fiscal (DANFE) de um pedido.</div>
+        </button>
+        <button class="home-card" onclick="showArticle('devolucao-ecommerce')">
+          <div class="home-card-icon">↩️</div>
+          <div class="home-card-title">Devolução E-commerce</div>
+          <div class="home-card-desc">Como registrar devolução de peça do e-commerce em loja.</div>
+        </button>
+        <button class="home-card" onclick="showArticle('devolucao-defeito')">
+          <div class="home-card-icon">🔴</div>
+          <div class="home-card-title">Devolução c/ Defeito</div>
+          <div class="home-card-desc">Como registrar devolução de peças com defeito.</div>
         </button>
       </div>
     </div>
@@ -430,6 +474,11 @@
       </div>
 
       <p>A <strong>Pendência Total</strong> é usada quando a loja não tem nenhuma peça do pedido disponível para envio. Ao executar esse processo, o sistema registra a indisponibilidade e realoca o pedido para outro seller ou aciona o cancelamento, dependendo da situação.</p>
+
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/GKmwK0Yw5Dw" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-caption">Vídeo tutorial — Como dar Pendência Total</div>
+      </div>
 
       <div class="callout callout-danger">
         <span class="callout-icon">🚨</span>
@@ -902,8 +951,278 @@
         <span class="callout-icon">⚠️</span>
         <div><strong>PAC vs SEDEX:</strong> Gere uma PLP separada para cada tipo de frete. Não misture PAC e SEDEX no mesmo embarque.</div>
       </div>
+
+      <hr class="divider">
+
+      <h2 style="font-size:17px; font-weight:600; margin-bottom:12px;">Parte 2 — Como imprimir a PLP gerada</h2>
+
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/1d51k9_MXrg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-caption">Vídeo tutorial — Como imprimir a Lista PLP</div>
+      </div>
+
+      <div class="steps" style="margin-top:20px;">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse Lista de Embarque e clique em Procurar</div>
+            <p class="step-desc">Após gerar o embarque, acesse a tela <strong>Lista de Embarque</strong> e clique em <strong>Procurar</strong> para localizar o embarque recém-criado.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Selecione o embarque</div>
+            <p class="step-desc">Localize e selecione o embarque correspondente na lista.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body">
+            <div class="step-title">Clique em Imprimir Lista</div>
+            <p class="step-desc">Clique em <strong>Imprimir Lista</strong> para gerar o documento PLP para postagem nos Correios.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
     <!-- /ARTICLE: GERAR PLP -->
+
+    <!-- ARTICLE: PENDÊNCIA PARCIAL -->
+    <div id="pendencia-parcial" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Pendência Parcial</span></div>
+        <h1 class="article-title">Como dar Pendência Parcial em um pedido</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">📋 Pré-Faturamento</span>
+        </div>
+      </div>
+      <p>A <strong>Pendência Parcial</strong> é usada quando a loja tem apenas alguns itens do pedido disponíveis — ela fatura o que tem e registra a divergência nos itens ausentes, permitindo que o sistema realoque os itens faltantes.</p>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/PyYWp7jg3ao" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-caption">Vídeo tutorial — Como dar Pendência Parcial</div>
+      </div>
+      <hr class="divider">
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse Conferir Pré-Faturamento</div>
+            <p class="step-desc">No Millenium, acesse a tela <strong>Conferir Pré-Faturamento</strong>. Digite ou bipe o número do pedido.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Preencha funcionário e bipe as peças disponíveis</div>
+            <p class="step-desc">Preencha o campo com o <strong>nome do funcionário</strong>. Em seguida, bipe apenas as peças que estão disponíveis na loja. As peças ausentes ficarão sem bipagem.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Efetivar — confirme a divergência</div>
+            <p class="step-desc">Clique em <strong>Efetivar</strong>. O sistema avisará: <em>"A conferência possui divergências. Deseja continuar mesmo assim?"</em> — clique em <strong>Sim</strong>. No campo <strong>Motivo da Divergência</strong>, selecione sempre <strong>00 — Indefinido</strong> e clique em <strong>OK</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Cancele a divergência no Pré-Faturamento</div>
+            <p class="step-desc">Volte à tela <strong>Listar Pré-Faturamento</strong> e clique em <strong>Procurar</strong>. Localize o pedido, selecione-o e clique em <strong>Ações › Ações sobre Divergência › Cancelar a divergência somente no Pré-Faturamento</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body">
+            <div class="step-title">Reimprima o pré-faturamento</div>
+            <p class="step-desc">Volte à tela <strong>Conferir Pré-Faturamento</strong> e digite novamente o número do pedido. A impressora abrirá automaticamente — selecione a impressora e clique em <strong>OK</strong>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Motivo da divergência:</strong> Sempre use <strong>00 — Indefinido</strong>. Não utilize outros motivos.</div>
+      </div>
+    </div>
+
+    <!-- ARTICLE: EMISSÃO DE ETIQUETA -->
+    <div id="emissao-etiqueta" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Emissão de Etiqueta de Transporte</span></div>
+        <h1 class="article-title">Como emitir a Etiqueta de Transporte</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">📮 Correios</span>
+        </div>
+      </div>
+      <p>Processo para emitir a etiqueta de transporte de um pedido já faturado, diretamente pelo número do pedido de venda.</p>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/656nTBKZmTI" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-caption">Vídeo tutorial — Emissão de Etiqueta de Transporte</div>
+      </div>
+      <hr class="divider">
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Localize o pedido pelo número</div>
+            <p class="step-desc">Na tela de emissão de etiqueta, vá ao campo <strong>Valor</strong> e digite o <strong>número do pedido de venda</strong>. Clique em <strong>Procurar</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body">
+            <div class="step-title">Emita a etiqueta</div>
+            <p class="step-desc">Após o pedido aparecer, clique em <strong>Emitir Etiqueta</strong>. Selecione a impressora e clique em <strong>OK</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTICLE: REIMPRESSÃO DE NF -->
+    <div id="reimpressao-nf" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Reimpressão de NF</span></div>
+        <h1 class="article-title">Como reimprimir a Nota Fiscal (DANFE)</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">🧾 Nota Fiscal</span>
+        </div>
+      </div>
+      <p>Processo para reimprimir a nota fiscal (DANFE ou DANFE Simplificada) de um pedido já faturado.</p>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/rHUOmMb7TPg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-caption">Vídeo tutorial — Reimpressão de NF</div>
+      </div>
+      <hr class="divider">
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse Emissão de Nota Fiscal › Status de NF</div>
+            <p class="step-desc">No Millenium, acesse <strong>Emissão de Nota Fiscal › Status de NF</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Localize pelo Pré-Faturamento</div>
+            <p class="step-desc">Na lateral esquerda, desça a página e localize o campo <strong>Pré-Faturamento</strong>. Digite o número do pré-faturamento e clique em <strong>Procurar</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body">
+            <div class="step-title">Imprima o DANFE</div>
+            <p class="step-desc">Após o pedido aparecer, clique em <strong>Imprimir DANFE</strong> ou <strong>DANFE Simplificada</strong> conforme necessário. Clique em <strong>OK</strong> para imprimir.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTICLE: DEVOLUÇÃO E-COMMERCE EM LOJA -->
+    <div id="devolucao-ecommerce" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Devolução E-commerce em Loja</span></div>
+        <h1 class="article-title">Como registrar Devolução de Peça do E-commerce em Loja</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">↩️ Devolução</span>
+          <span class="article-meta-tag">🏪 Loja Física</span>
+        </div>
+      </div>
+      <p>Processo para registrar no Millenium a devolução de uma peça comprada no e-commerce que o cliente trouxe fisicamente à loja.</p>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/HtDgrDlNbBI" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-caption">Vídeo tutorial — Devolução de Peça E-commerce em Loja</div>
+      </div>
+      <hr class="divider">
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse Eventos › Devolução E-commerce</div>
+            <p class="step-desc">No Millenium, acesse <strong>Eventos › Devolução E-commerce</strong>. Selecione a <strong>Filial</strong> da loja.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Localize o cliente pelo CPF</div>
+            <p class="step-desc">No campo <strong>Cliente</strong>, clique na <strong>lupa</strong> e busque pelo <strong>CPF do cliente</strong>. Selecione o cliente e preencha o campo <strong>Vendedor</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Localize a nota fiscal de referência</div>
+            <p class="step-desc">No campo <strong>Nota de Referência</strong>, clique na <strong>setinha</strong> e procure a nota fiscal do pedido original. Selecione a nota correta.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Selecione o produto e efetive</div>
+            <p class="step-desc">Selecione o(s) produto(s) a serem devolvidos e clique em <strong>Efetivar</strong> para concluir o registro da devolução.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARTICLE: DEVOLUÇÃO COM DEFEITO -->
+    <div id="devolucao-defeito" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Millenium — ERP › <span>Devolução de Peças com Defeito</span></div>
+        <h1 class="article-title">Como registrar Devolução de Peças com Defeito</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">🔴 Defeito</span>
+          <span class="article-meta-tag">📦 Logística</span>
+        </div>
+      </div>
+      <p>Processo para registrar no Millenium a devolução de peças identificadas com defeito, acessado via módulo de Logística.</p>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/50goDuL3kTg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-caption">Vídeo tutorial — Devolução com Defeito (parte 1/2)</div>
+      </div>
+      <div class="video-wrapper" style="margin-top:12px;">
+        <iframe src="https://www.youtube.com/embed/r8vminfqonA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="video-caption">Vídeo tutorial — Devolução com Defeito (parte 2/2)</div>
+      </div>
+      <hr class="divider">
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse Logística › Expedição › Movimentações › Devolução de Peças com Defeito</div>
+            <p class="step-desc">No Millenium, navegue até <strong>Logística › Expedição › Movimentações › Devolução de Peças com Defeito</strong>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Selecione a filial</div>
+            <p class="step-desc">Inclua a <strong>Filial</strong> correspondente às peças com defeito.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Bipe todas as peças com defeito</div>
+            <p class="step-desc">Clique no campo <strong>Código</strong> e bipe cada peça com defeito. Repita até bipar todas.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div></div>
+          <div class="step-body">
+            <div class="step-title">Efetivar</div>
+            <p class="step-desc">Após bipar todas as peças, clique em <strong>Efetivar</strong> no canto inferior esquerdo para concluir o registro.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </main>
 </div>
@@ -941,16 +1260,51 @@ const searchIndex = [
   {
     id: 'entrada-mercadoria',
     title: 'Como dar entrada de mercadoria em loja',
-    section: 'Lojas Físicas',
+    section: 'Millenium — ERP',
     tags: ['entrada de mercadoria', 'recebimento', 'romaneio', 'conferir transferência', 'bipar', 'bipagem', 'transferência pendente', 'movimentações', 'logística', 'loja física', 'estoque'],
     excerpt: 'Acesse Consulta de Movimentações, localize o romaneio, clique em Conferir Transferência Pendente, bipe todas as peças e efetive.'
   },
   {
     id: 'gerar-plp',
     title: 'Como gerar a Lista PLP (Correios)',
-    section: 'Lojas Físicas',
-    tags: ['plp', 'lista plp', 'pré-lista de postagem', 'correios', 'embarque', 'postagem', 'pac', 'sedex', 'incluir embarque', 'transportadora', 'frete'],
+    section: 'Millenium — ERP',
+    tags: ['plp', 'lista plp', 'pré-lista de postagem', 'correios', 'embarque', 'postagem', 'pac', 'sedex', 'incluir embarque', 'transportadora', 'frete', 'imprimir plp', 'lista de embarque'],
     excerpt: 'Acesse PLP › Incluir Embarque, preencha filial, transportadora Correios 001 e tipo de frete, busque itens com data inicial 3 dias anteriores, selecione os pedidos e efetue.'
+  },
+  {
+    id: 'pendencia-parcial',
+    title: 'Como dar Pendência Parcial em um pedido',
+    section: 'Millenium — ERP',
+    tags: ['pendência parcial', 'pendencia parcial', 'conferir pré-faturamento', 'divergência', 'divergencia', 'motivo indefinido', 'bipar', 'pré-faturamento', 'ações sobre divergência'],
+    excerpt: 'Confira o pré-faturamento bipando as peças disponíveis, efetive com motivo 00 Indefinido, cancele a divergência no pré-faturamento e reimprima.'
+  },
+  {
+    id: 'emissao-etiqueta',
+    title: 'Como emitir a Etiqueta de Transporte',
+    section: 'Millenium — ERP',
+    tags: ['emissão etiqueta', 'etiqueta', 'emitir etiqueta', 'transportadora', 'correios', 'pedido de venda'],
+    excerpt: 'Digite o número do pedido no campo Valor, clique em Procurar e depois em Emitir Etiqueta. Selecione a impressora e clique OK.'
+  },
+  {
+    id: 'reimpressao-nf',
+    title: 'Como reimprimir a Nota Fiscal (DANFE)',
+    section: 'Millenium — ERP',
+    tags: ['reimpressão', 'nota fiscal', 'danfe', 'danfe simplificada', 'nf', 'status de nf', 'emissão nota fiscal', 'pré-faturamento'],
+    excerpt: 'Acesse Status de NF, localize pelo número do pré-faturamento, clique em Imprimir DANFE e selecione a impressora.'
+  },
+  {
+    id: 'devolucao-ecommerce',
+    title: 'Como registrar Devolução de Peça do E-commerce em Loja',
+    section: 'Millenium — ERP',
+    tags: ['devolução', 'devolucao', 'e-commerce', 'loja física', 'eventos', 'cpf', 'nota de referência', 'nota fiscal', 'troca', 'cliente'],
+    excerpt: 'Acesse Eventos › Devolução E-commerce, selecione a filial, localize o cliente pelo CPF, busque a nota de referência, selecione o produto e efetive.'
+  },
+  {
+    id: 'devolucao-defeito',
+    title: 'Como registrar Devolução de Peças com Defeito',
+    section: 'Millenium — ERP',
+    tags: ['devolução defeito', 'defeito', 'peças com defeito', 'logística', 'expedição', 'movimentações', 'bipar', 'bipagem', 'efetivar'],
+    excerpt: 'Acesse Logística › Expedição › Movimentações › Devolução de Peças com Defeito, selecione a filial, bipe as peças e efetive.'
   }
 ];
 
