@@ -334,6 +334,16 @@
       <span class="nav-badge badge-warn">ERP</span>
     </button>
 
+    <div class="sidebar-label">Lojas Físicas</div>
+    <button class="nav-item" onclick="showArticle('entrada-mercadoria')" id="nav-entrada-mercadoria">
+      <span class="nav-icon">🚚</span> Entrada de Mercadoria
+      <span class="nav-badge badge-gray">ERP</span>
+    </button>
+    <button class="nav-item" onclick="showArticle('gerar-plp')" id="nav-gerar-plp">
+      <span class="nav-icon">📮</span> Gerar Lista PLP
+      <span class="nav-badge badge-info">ERP</span>
+    </button>
+
     <div class="sidebar-label">VTEX — Pedidos</div>
     <button class="nav-item" style="opacity:.4; cursor:default;">
       <span class="nav-icon">📦</span> Em breve...
@@ -394,6 +404,16 @@
           <div class="home-card-icon">📥</div>
           <div class="home-card-title">Entrada de Produto</div>
           <div class="home-card-desc">Como adicionar estoque manualmente a um produto no Millenium.</div>
+        </button>
+        <button class="home-card" onclick="showArticle('entrada-mercadoria')">
+          <div class="home-card-icon">🚚</div>
+          <div class="home-card-title">Entrada de Mercadoria</div>
+          <div class="home-card-desc">Como receber e conferir transferência de mercadoria na loja.</div>
+        </button>
+        <button class="home-card" onclick="showArticle('gerar-plp')">
+          <div class="home-card-icon">📮</div>
+          <div class="home-card-title">Gerar Lista PLP</div>
+          <div class="home-card-desc">Como incluir embarque e gerar a lista PLP dos Correios.</div>
         </button>
       </div>
     </div>
@@ -722,6 +742,169 @@
     </div>
     <!-- /ARTICLE: ENTRADA DE PRODUTO -->
 
+    <!-- ARTICLE: ENTRADA DE MERCADORIA -->
+    <div id="entrada-mercadoria" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Lojas Físicas › <span>Entrada de Mercadoria</span></div>
+        <h1 class="article-title">Como dar entrada de mercadoria em loja</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">🚚 Recebimento</span>
+          <span class="article-meta-tag">🏪 Lojas Físicas</span>
+        </div>
+      </div>
+
+      <p>Processo usado para receber e conferir uma transferência de mercadoria que chegou na loja. A conferência é feita bipando as peças diretamente no romaneio correspondente.</p>
+
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/rTarsQRsnR4"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+        <div class="video-caption">Vídeo tutorial — Entrada de mercadoria em loja</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse Logística › Recebimento › Consulta de Movimentações</div>
+            <p class="step-desc">No Millenium, navegue até <strong>Logística › Recebimento › Consulta de Movimentações</strong>.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Filtre pela filial e procure o romaneio</div>
+            <p class="step-desc">Selecione a <strong>Filial</strong> da loja no filtro e clique em <strong>Procurar</strong>. Localize o romaneio correspondente à mercadoria recebida e clique nele para abrir.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Clique em Conferir Transferência Pendente</div>
+            <p class="step-desc">Dentro do romaneio, clique em <strong>Conferir Transferência Pendente</strong> para iniciar o processo de conferência das peças.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Bipe todas as peças recebidas</div>
+            <p class="step-desc">Clique no campo <strong>Código</strong> e bipe cada peça recebida com o leitor. Repita até bipar todas as peças do romaneio.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body">
+            <div class="step-title">Efetivar</div>
+            <p class="step-desc">Após bipar todas as peças, clique em <strong>Efetivar</strong> para confirmar o recebimento. A mercadoria entrará no estoque da loja.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Atenção:</strong> Confira se o número de peças bipadas confere com o total esperado no romaneio antes de efetivar. Divergências devem ser reportadas antes de concluir o processo.</div>
+      </div>
+    </div>
+    <!-- /ARTICLE: ENTRADA DE MERCADORIA -->
+
+    <!-- ARTICLE: GERAR PLP -->
+    <div id="gerar-plp" class="article">
+      <div class="article-header">
+        <div class="article-breadcrumb">Lojas Físicas › <span>Gerar Lista PLP</span></div>
+        <h1 class="article-title">Como gerar a Lista PLP (Correios)</h1>
+        <div class="article-meta">
+          <span class="article-meta-tag">⚙️ Millenium</span>
+          <span class="article-meta-tag">📮 Correios</span>
+          <span class="article-meta-tag">📦 Embarque</span>
+        </div>
+      </div>
+
+      <p>A <strong>PLP (Pré-Lista de Postagem)</strong> é o documento gerado para acompanhar os pedidos que serão postados nos Correios. Deve ser gerada sempre antes da postagem, agrupando os pedidos do dia por tipo de frete.</p>
+
+      <div class="video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/j1xKwI-G4bA"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+        <div class="video-caption">Vídeo tutorial — Como gerar a Lista PLP</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Acesse PLP › Incluir Embarque</div>
+            <p class="step-desc">No Millenium, acesse a tela <strong>PLP › Incluir Embarque</strong>.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Preencha os dados do embarque</div>
+            <p class="step-desc">Preencha os campos obrigatórios:</p>
+            <ul style="margin: 8px 0 0 16px; font-size: 14px; color: var(--text-muted); line-height: 2;">
+              <li><strong>Filial</strong> — selecione a loja</li>
+              <li><strong>Transportadora</strong> — sempre <strong>Correios 001</strong></li>
+              <li><strong>Placa do veículo</strong> — sempre o nome da loja</li>
+              <li><strong>Tipo de frete</strong> — PAC ou SEDEX, conforme os pedidos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Busque os itens de embarque</div>
+            <p class="step-desc">Na seção <strong>Itens de Embarque</strong>, clique na <strong>lupa</strong> para abrir o filtro. No campo <strong>Data Inicial</strong>, insira sempre <strong>3 dias anteriores</strong> à data atual. Clique em <strong>OK</strong> para buscar os pedidos disponíveis.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-line"></div></div>
+          <div class="step-body">
+            <div class="step-title">Selecione os pedidos para embarque</div>
+            <p class="step-desc">Selecione na lista os pedidos que irão para postagem neste embarque. Confira os dados antes de prosseguir.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body">
+            <div class="step-title">Clique em OK e depois em Efetuar</div>
+            <p class="step-desc">Confirme a seleção clicando em <strong>OK</strong> e em seguida em <strong>Efetuar</strong>. A PLP será gerada e estará pronta para impressão e postagem.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Lembre-se:</strong> A data inicial de 3 dias anteriores garante que pedidos com etiquetas geradas nos últimos dias não fiquem de fora da lista. Sempre use esse padrão.</div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>PAC vs SEDEX:</strong> Gere uma PLP separada para cada tipo de frete. Não misture PAC e SEDEX no mesmo embarque.</div>
+      </div>
+    </div>
+    <!-- /ARTICLE: GERAR PLP -->
+
   </main>
 </div>
 
@@ -754,6 +937,20 @@ const searchIndex = [
     section: 'Millenium — ERP',
     tags: ['entrada de produto', 'estoque', 'estoque fake', 'estoque manual', 'movimentações', 'recebimento', 'logística', 'sku', 'grade', 'pronto para manuseio', 'pedido travado', 'consulta de estoque', 'filial'],
     excerpt: 'Acesse Logística › Recebimento › Movimentações, selecione a filial e o produto, insira a quantidade na grade e efetive. Confirme na Consulta de Estoque.'
+  },
+  {
+    id: 'entrada-mercadoria',
+    title: 'Como dar entrada de mercadoria em loja',
+    section: 'Lojas Físicas',
+    tags: ['entrada de mercadoria', 'recebimento', 'romaneio', 'conferir transferência', 'bipar', 'bipagem', 'transferência pendente', 'movimentações', 'logística', 'loja física', 'estoque'],
+    excerpt: 'Acesse Consulta de Movimentações, localize o romaneio, clique em Conferir Transferência Pendente, bipe todas as peças e efetive.'
+  },
+  {
+    id: 'gerar-plp',
+    title: 'Como gerar a Lista PLP (Correios)',
+    section: 'Lojas Físicas',
+    tags: ['plp', 'lista plp', 'pré-lista de postagem', 'correios', 'embarque', 'postagem', 'pac', 'sedex', 'incluir embarque', 'transportadora', 'frete'],
+    excerpt: 'Acesse PLP › Incluir Embarque, preencha filial, transportadora Correios 001 e tipo de frete, busque itens com data inicial 3 dias anteriores, selecione os pedidos e efetue.'
   }
 ];
 
